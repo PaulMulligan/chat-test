@@ -1,0 +1,32 @@
+{
+	"name": "Origamist",
+	"classAbbr": "Ori",
+	"playable": true,
+	"hp": 10,
+	"mainStat": "dex",
+	"skills": [
+		{
+            "id": "fold",
+            "display": "Fold",
+            "mod": 0,
+            "train": 95,
+            "type": "spell",
+            "wait": 5,
+            "learned": true,
+            "prerequisites": {
+                "level": 1
+            }
+        },{
+            "id": "tiger",
+            "display": "Tiger",
+            "mod": 0,
+            "train": 95,
+            "type": "spell",
+            "wait": 5,
+            "learned": true,
+            "prerequisites": {
+                "level": 1
+            }
+        }
+	]
+}

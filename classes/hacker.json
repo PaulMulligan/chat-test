@@ -1,0 +1,33 @@
+{
+	"name": "Hacker",
+	"classAbbr": "Hak",
+	"playable": true,
+	"hp": 10,
+	"mainStat": "int",
+	"skills": [
+		{
+			"id": "hack",
+			"display": "Hack",
+			"mod": 0,
+			"train": 75,
+			"type": "spell",
+			"wait": 4,
+			"learned": true,
+			"prerequisites": {
+				"level": 1
+			}
+		},
+		{
+            "id": "_execute",
+            "display": "_execute",
+            "mod": 0,
+            "train": 65,
+            "type": "spell",
+            "wait": 4,
+            "learned": true,
+            "prerequisites": {
+                "level": 1
+            }
+        }
+	]
+}

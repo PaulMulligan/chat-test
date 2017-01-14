@@ -1,0 +1,21 @@
+{
+	"name": "Madbomb",
+	"classAbbr": "Mad",
+	"playable": true,
+	"hp": 10,
+	"mainStat": "con",
+	"skills": [
+		{
+			"id": "blast",
+			"display": "Blast",
+			"mod": 0,
+			"train": 65,
+			"type": "spell",
+			"wait": 4,
+			"learned": false,
+			"prerequisites": {
+				"level": 1
+			}
+		}
+	]
+}

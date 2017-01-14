@@ -1,0 +1,194 @@
+/*
+red: #ff0033;
+green: #60f066;
+blue: #0066ff;
+yellow: #ffcc00;
+*/
+html, body {
+background-color: #000;
+color: #fff;
+font-size: .9em;
+padding: 0;
+margin: 0;
+height: 100%;
+letter-spacing: 0.0650em;
+background-image: url('bg.jpg');
+background-repeat: no-repeat;
+background-position: center top; 
+}
+html, body a {
+color: #60f066;
+}
+.sans-serif {
+font-family: sans-serif;
+}
+h1 {
+font-family: serif;
+padding-top: 0;
+margin-top: 0;
+font-size: 155%;
+color: #ffcc00;
+}
+h2, h3, h4, h5, h6, .title {
+color: #ddd;
+font-family: serif;
+padding-top: 0;
+margin-top: 0;
+font-size: 145%;
+}
+#mudwrapper {
+padding-top: 280px;
+height: 850px;
+width: 980px;
+margin: 0 auto;
+}
+.error {
+color: #ff0033;
+}
+.failure {
+color: #ff0033;
+}
+.success {
+color: #60f066;
+}
+.warning {
+color: #ffcc00;
+}
+.alert {
+color: #0066ff;
+}
+.row {
+margin-bottom: .3em;
+}
+#terminal {
+width: 100%;
+height: 565px;
+overflow: auto;
+}
+#terminal .subtext {
+font-style: italic;
+}
+#terminal .row {
+width: 99%;
+}
+#inputwrapper {
+width: 980px;
+padding-top: 5px;
+}
+#cmd {
+border: none;
+padding: 0 auto 0 auto;
+opacity: 0.75;
+}
+.opening-title {
+font-size: 3em;
+text-shadow: 2px 2px cyan;
+color: #fff;
+}
+.score {
+margin-bottom: .25em;
+}
+.score h1, h4 {
+border-bottom: 1px dashed #eee;
+}
+.score h4 {
+text-shadow: none;
+border-bottom: 1px solid #000;
+}
+.score .score-level {
+color: #ff0033;
+}
+.score .saves li{
+list-style-type: square;
+}
+.score .stat-gold {
+color: #ffcc00;
+}
+#score .stat-hp {
+color: #ff0033;
+}
+.score .stat-mana {
+color: #0066ff;
+}
+.score .stat-mv {
+color: #60f066;
+}
+.cmd {
+color: #888;
+font-style: italic;
+}
+.cmd-get {
+color: #60f066;
+}
+.cmd-chat {
+color: #fff;
+}
+.cmd-chat .msg-name {
+color: #ffcc00;
+font-weight: bold;
+}
+.cmd-say {
+color: #fff;
+}
+.cmd-say .msg-name {
+font-weight: bold;
+color: #60f066;
+}
+.cmd-yell {
+color: #fff;
+}
+.cmd-yell .msg-name {
+font-weight: bold;
+color: purple;
+}
+.motd {
+border-top: 1px dashed #ffcc00;
+border-bottom: 1px dashed #ffcc00;
+color: cyan;
+padding: .8em 0 0 0;
+margin: .5em 0 1em 0;
+font-weight: bold;
+}
+.room .room-title {
+color: #ffcc00;
+}
+.room .room-exits {
+color: cyan;
+}
+.room-item {
+color: #eee;
+}
+.enter-name {
+font-weight: bold;
+}
+.logout-msg {
+font-weight: bold;
+color: #ff0033;
+}
+.table-no-border>thead>tr>th, 
+.table-no-border>tbody>tr>th, 
+.table-no-border>tfoot>tr>th, 
+.table-no-border>thead>tr>td, 
+.table-no-border>tbody>tr>td, 
+.table-no-border>tfoot>tr>td {
+border-top: none;
+}
+.red {
+color: cyan;
+}
+.green {
+color: #60f066;
+}
+.blue {
+color: #0066ff;
+}
+.yellow {
+color: #ffcc00;
+}
+.grey {
+color: #ddd;
+}
+.large {
+font-size: 1.5em;
+letter-spacing: 0em;
+}

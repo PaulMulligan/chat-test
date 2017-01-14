@@ -1,0 +1,20 @@
+{
+	"id": "",
+	"title": "",
+	"area": "",
+	"light": false,
+	"content": "",
+	"terrain": "",
+	"outdoors": true,
+	"waitMod": 0,
+	"moveMod": 0,
+	"exits": [],
+	"playersInRoom": [],
+	"monsters": [],
+	"items": [],
+	"itemType": "room",
+	"hasEvents": false,
+	"preventRecall": false,
+	"preventDecay": false,
+	"behaviors": []
+}
