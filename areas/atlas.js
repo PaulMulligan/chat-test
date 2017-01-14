@@ -26,7 +26,7 @@ module.exports = {
 			light: true,
 			area: 'atlas',
 			content: 'This is the reception room for Atlas Tower. Floor-to-ceiling windows look down onto the rainy city outside. The neon lights of the Atlas sign cast flickering colours on the shiny black surfaces of the room. Teleportation circles stand on a raised platform, with stairs leading down to the south.',
-			outdoors: true,
+			outdoors: false,
 			exits: [
 				{
 					cmd: 'south',
@@ -116,8 +116,9 @@ module.exports = {
 			id: '2',
 			title: 'Conference Hall',
 			area: 'atlas',
+			light: true,
 			content: 'This massive circular room is floored and walled with gleaming smooth black marble. Many huge curved couches are arranged in the center, around glass coffee tables. The red leather is dark in the low light coming from the recessed lanterns on the ceiling.',
-			outdoors: true,
+			outdoors: false,
 			exits: [
 				{
 					cmd: 'north',
@@ -138,8 +139,9 @@ module.exports = {
 			id: '3',
 			title: 'Dueling Hall',
 			area: 'atlas',
+			light: true,
 			content: 'This long room has a recessed rectangular area in the center, where the ground glows with a green lattice. It is used to call up holographic monsters for training purposes.',
-			outdoors: true,
+			outdoors: false,
 			exits: [
 				{
 					cmd: 'west',
@@ -176,8 +178,9 @@ module.exports = {
             id: '4',
             title: 'Supply Room',
             area: 'atlas',
+			light: true,
             content: 'The walls of this tall room are covered in steel shelves that slide up and down of their own accord, replenishing them with new stock seemingly at random.',
-            outdoors: true,
+            outdoors: false,
             exits: [
                 {
                     cmd: 'north',
