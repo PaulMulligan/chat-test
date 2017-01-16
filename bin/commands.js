@@ -1946,6 +1946,9 @@ Cmd.prototype.cast = function(player, command, fn) {
 								spellTarget = player;
 							} else {
 								spellTarget = World.search(roomObj.monsters, {arg: command.last, input: command.arg});
+								if (!spellTarget) {
+								    spellTarget = World.search(roomObj.playersInRoom, {arg: command.last, input: command.arg});
+								}
 							}
 
 							if (spellTarget) {
@@ -1998,6 +2001,90 @@ Cmd.prototype.cast = function(player, command, fn) {
 			msg: 'You cannot use magic while asleep.'
 		});
 	}
+};
+
+Cmd.prototype.ask = function(player, command, fn) {
+    var cmd = this,
+    mob,
+    roomObj,
+    askTarget;
+    
+    if (command.roomObj) {
+        roomObj = command.roomObj;
+    } else {
+        roomObj = World.getRoomObject(player.area, player.roomid);
+    }
+    
+    askTarget = World.search(roomObj.monsters, {arg: command.arg, input: command.last});
+    
+    if (!askTarget) {
+        World.msgPlayer(player, {
+            msg: 'You don\'t see anyone to ask by that name.'
+        });
+    } else if (!askTarget.topics[command.last]) {
+        World.msgPlayer(player, {
+            msg: askTarget.name + ' has nothing to say about that.'
+        });
+    } else {
+        World.msgPlayer(player, {
+            msg: askTarget.name + ' says "' + askTarget.topics[command.last] + '"'
+        });
+    }
+};
+
+Cmd.prototype.explore = function(player, command, fn) {
+    var cmd = this,
+    event,
+    roomObj,
+    valid;
+    
+    if (command.roomObj) {
+        roomObj = command.roomObj;
+    } else {
+        roomObj = World.getRoomObject(player.area, player.roomid);
+    }
+    
+    if (!roomObj.events.length) {
+        World.msgPlayer(player, {
+            msg: 'It doesn\'t seem like there is anything to find here.'
+        });
+    } else {
+        event = roomObj.events[parseInt(Math.random() * ((roomObj.events.length)))];
+    
+        if (event.valid && typeof event.valid == 'function') {
+            valid = event.valid(player, command, fn);
+        } else {
+            valid = true;
+        }
+        
+        if (event.moveMod >= player.cmv) {
+            World.msgPlayer(player, {
+                msg: 'You are too tired to explore here.'
+            });
+        } else {
+            player.cmv -= event.moveMod;
+            
+            if (player.seen.indexOf(event.id) != -1 && !event.repeatable) {
+                valid = false;
+            }
+            
+            if (!valid) {
+                World.msgPlayer(player, {
+                    msg: 'You don\'t find anything interesting.'
+                });
+            } else {
+                World.msgPlayer(player, {
+                    msg: event.description
+                });
+                if (event.effect && typeof event.effect == 'function') {
+                    event.effect(player, command, fn);
+                }
+                if (player.seen.indexOf(event.id) == -1) {
+                    player.seen.push(event.id);
+                }
+            }
+        }
+    }
 };
 
 Cmd.prototype.kill = function(player, command, avoidGroupCheck, fn) {
@@ -2075,6 +2162,7 @@ Cmd.prototype.look = function(target, command) {
 	var roomObj,
 	displayHTML,
 	monster,
+	player,
 	itemDescription,	
 	item,
 	i = 0;
@@ -2144,10 +2232,20 @@ Cmd.prototype.look = function(target, command) {
 							styleClass: 'cmd-look'
 						});
 					} else {
-						World.msgPlayer(target, {
-							msg: 'You do not see that here.',
-							styleClass: 'error'
-						});
+					    player = Room.getPlayer(roomObj, command);
+					    if (player) {
+				            itemDescription = player.name + ' is a ' + player.size.display + ' ' + player.sex + ' ' + player.race + ' ' + player.charClass + '.' + player.description;
+	                        
+	                        World.msgPlayer(target, {
+	                            msg: itemDescription,
+	                            styleClass: 'cmd-look'
+	                        });
+					    } else {
+					        World.msgPlayer(target, {
+	                            msg: 'You do not see that here.',
+	                            styleClass: 'error'
+	                        });
+					    }
 					}
 				}
 			}

@@ -1,9 +1,11 @@
 
 {
-	"name": "Human",
+	"name": "Rabbit",
+	"dex": 2,
+	"con": -1,
 	"playable": true,
 	"trains": 5,
-	"attackType": "punch",
+	"attackType": "kick",
 	"diceNum": 1,
 	"diceSides": 4,
 	"diceMod": 1,

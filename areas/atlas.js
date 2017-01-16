@@ -33,6 +33,17 @@ module.exports = {
 					id: '2'
 				}
 			],
+			events: [{
+			    "id": 1,
+			    "moveMod": 0,
+			    "description": "You find a shiny penny",
+			    "repeatable": true,
+			    "effect": function(player) {
+			        World.msgPlayer(player, {
+	                    msg: "It worked!"
+	                });
+			    }
+			}],
 			playersInRoom: [],
 			monsters: [
 				{
@@ -63,7 +74,10 @@ module.exports = {
 						module: 'phobos'
 					}, {
 						module: 'wander'
-					}]
+					}],
+					topics: {
+					    deimos: 'Deimos is my brother. We are inseparable.'
+					}
 				}, {
                     name: 'Deimos',
                     level: 15,
@@ -92,7 +106,10 @@ module.exports = {
                         module: 'phobos'
                     }, {
                         module: 'wander'
-                    }]
+                    }],
+                    topics: {
+                        phobos: 'Phobos is my brother. We are inseparable.'
+                    }
                 }
 			],
 			items: [{

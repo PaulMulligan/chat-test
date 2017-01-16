@@ -57,7 +57,7 @@
 	"area": "",
 	"originatingArea": "",
 	"roomid": "1",
-	"recall": {"roomid": "1", "area": "atlas"},
+	"recall": {"roomid": "1", "area": "dormaus"},
 	"description": "",
 	"reply": "",
 	"following": false,
@@ -81,7 +81,7 @@
 	"smell": true, 
 	"taste": true,
 	"mute": false,
-	"size": {"value": 3, "display": "medium"},
+	"size": {"value": 3, "display": "medium-sized"},
 	"kingdom": "mammal",
 	"itemType": "entity",
 	"preventItemDecay": false,
@@ -172,6 +172,8 @@
 	"trainer": false,
 	"trainMsg": "",
 	"log": [],
-	"runOnAliveWhenEmpty": true
+	"runOnAliveWhenEmpty": true,
+	"topics": {},
+	"seen": []
 }
 

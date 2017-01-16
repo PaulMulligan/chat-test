@@ -15,7 +15,7 @@ Character = function () {
 		{msg: ' is <span class="red">bleeding</span> profusely.', percentage: 10},
 		{msg: ' has some major cuts and brusies.', percentage: 20},
 		{msg: ' has some large cuts and looks exhausted!', percentage: 30},
-		{msg: ' has some minor cuts and brusies.', percentage: 40},
+		{msg: ' has some minor cuts and bruises.', percentage: 40},
 		{msg: ' is tired and bruised.', percentage: 50},
 		{msg: ' is hurt and showing <span class="grey">signs of fatigue</span>.', percentage: 60},
 		{msg: ' is looking tired and wounded.', percentage: 70},
@@ -237,8 +237,8 @@ Character.prototype.create = function(s) {
 	s.player.created = new Date();
 	s.player.saved = null;
 	s.player.role = 'player';
-	s.player.area = 'atlas';
-	s.player.roomid = '1';
+	s.player.area = startingArea.area;
+	s.player.roomid = startingArea.roomid;
 	s.player.trains += 25;
 	s.player.deaths = 0;
 	s.player.baseStr += 12 + s.player.str;
@@ -322,6 +322,9 @@ Character.prototype.newCharacter = function(s, command) {
 	if (!Cmds) {
 		Cmds = require('./commands').cmd;
 	}
+	
+	s.player.short = s.player.displayName;
+	s.player.capitalShort = s.player.displayName;
 	
 	if (s.player.creationStep === 1) {
 		World.msgPlayer(s, {

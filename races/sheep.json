@@ -1,13 +1,14 @@
 
 {
 	"name": "Sheep",
-	"wis": -2,
-	"int": -2,
+	"wis": -1,
+	"con": 2,
 	"playable": true,
 	"trains": 5,
 	"attackType": "bleat",
 	"diceNum": 1,
-	"diceSides": 2,
-	"diceMod": 1
+	"diceSides": 4,
+	"diceMod": 1,
+    "hitRoll": 10
 }
 

@@ -11,7 +11,7 @@ exports.server = {
 		// if its an array the selection is randomized.
 		// used in Character.create()
 		startingArea: {
-			area: 'atlas',
+			area: 'dormaus',
 			roomid: '1'
 		}
 	},
