@@ -2,7 +2,7 @@
 {
 	"name": "Raccoon",
 	"dex": 2,
-	"str": -1
+	"str": -1,
 	"playable": true,
 	"trains": 5,
 	"attackType": "claw",

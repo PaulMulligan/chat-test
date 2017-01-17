@@ -912,6 +912,7 @@ World.prototype.getLog = function(logId) {
 
 World.prototype.msgPlayer = function(target, msgObj, canSee) {
 	var s,
+	world = this,
 	prompt,
 	prependName = false,
 	appendName = false,
@@ -977,7 +978,8 @@ World.prototype.msgPlayer = function(target, msgObj, canSee) {
 					msgObj.msg += prompt;
 				}
 					
-				s.emit('msg', msgObj);
+				world.emitAll(msgObj, target);
+//				s.emit('msg', msgObj);
 				
 				msgObj.msg = baseMsg; 
 			} else if (typeof msgObj.msg === 'function') {
@@ -1003,7 +1005,8 @@ World.prototype.msgPlayer = function(target, msgObj, canSee) {
 					}
 
 					if (send) {
-						s.emit('msg', msgObj);
+					    world.emitAll(msgObj, target);
+//						s.emit('msg', msgObj);
 					}
 					
 					msgObj.msg = baseMsg;
@@ -1015,8 +1018,25 @@ World.prototype.msgPlayer = function(target, msgObj, canSee) {
 			}
 		}
 	} else {
-		s.emit('msg', msgObj);
+		world.emitAll(msgObj, target);
+//	    s.emit('msg', msgObj);
 	}
+};
+
+World.prototype.emitAll = function(msgObj, target) {
+    var s, i;
+    if (target.isPlayer) {
+        if (target.sockets && target.sockets.length > 0) {
+            for (i = 0; i < target.sockets.length; i++) {
+                s = target.sockets[i];
+                s.emit('msg', msgObj);
+            }
+        } else {
+            target.socket.emit('msg', msgObj);
+        }
+    } else {
+        target.emit('msg', msgObj);
+    }
 };
 
 // Emit a message to all a given rooms players

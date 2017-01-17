@@ -1,0 +1,13 @@
+{
+	"name": "Hydra",
+	"raceAbbr": "Hyd",
+	"hp": 20,
+	"playable": true,
+	"size": {"value": 4, "display": "large"},
+	"meleeRes": 1,
+	"attackType": "strike",
+	"diceNum": 1,
+	"diceSides": 8,
+	"hitRoll": 10
+}
+

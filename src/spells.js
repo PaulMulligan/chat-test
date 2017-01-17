@@ -559,5 +559,37 @@ Spell.prototype.ensheep = function(skillObj, player, opponent, roomObj, command,
     }
 };
 
+Spell.prototype.orochi = function(skillObj, player, opponent, roomObj, command, fn) {
+    var intMod,
+    cost = 0,
+    damage = 0;
+    
+    if (Character.hasAffect(player, 'hydra')) {
+        Character.createHydra(player, opponent);
+    } else if (!opponent.isPlayer){
+        World.msgPlayer(player, {
+            msg: 'The energy of the hydra finds this vessel unworthy!',
+            styleClass: 'error'
+        });
+    } else {
+        opponent.affects.push({
+            id: 'hydra',
+            affect: 'Hydra Energy',
+            decay: 2,
+            decayMsg: opponent.displayName + ' feels independant again.'
+        });
+        World.msgPlayer(player, {
+            msg: 'You summon a spectre of the hydra, and a glowing energy shaped like a winding snake flows into the body of '
+                + opponent.displayName + ', leaving them with a strange sensation of missing something important...',
+            noPrompt: true
+        });
+
+        World.msgPlayer(opponent, {
+            msg: player.displayName + ' summons a glowing flow of energy, shaped like a sinister snake. It flies into you, '
+            + 'and you feel as though you are missing something important...'
+        });
+    }
+};
+
 module.exports.spells = new Spell();
 

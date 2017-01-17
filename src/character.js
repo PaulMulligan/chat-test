@@ -37,14 +37,19 @@ Character.prototype.login = function(r, s, fn) {
 				if (!err) {
 					for (i; i < World.players.length; i += 1) {
 						if (World.players[i].name.toLowerCase() === name) {
-							World.msgPlayer(World.players[i], {
-								msg: 'Relogging....',
-								styleClass: 'error',
-								noPrompt: true
-							});
-							
-							World.players[i].socket.disconnect();
-
+						    if (World.players[i].race == 'hydra') {
+						        s.player = World.players[i];
+						    } else {
+						        World.msgPlayer(World.players[i], {
+	                                msg: 'Relogging....',
+	                                styleClass: 'error',
+	                                noPrompt: true
+	                            });
+	                            
+						        World.players[i].sockets = [];
+	                            World.players[i].socket.disconnect();
+						    }
+	
 							s.player = World.players[i];
 						}				
 					}
@@ -53,20 +58,31 @@ Character.prototype.login = function(r, s, fn) {
 						s.player = JSON.parse(r);
 					}
 
-					s.player.name = s.player.name.charAt(0).toUpperCase() + s.player.name.slice(1);
-	
-					if (s.player.lastname !== '') {
-						s.player.lastname = s.player.lastname.charAt(0).toUpperCase() + s.player.lastname.slice(1);
-					}
-
-					s.player.sid = s.id;
-					s.player.socket = s;
-		
-					s.player.logged = false;
-					s.player.verifiedPassword = false;
-					s.player.verifiedName = false;
-					
-					return fn(s, true);
+					if (s.player.disabled) {
+					    s.player.socket = s;
+					    World.msgPlayer(s, {
+				            msg: 'This character is no longer an independant entity.',
+				            styleClass: 'error',
+				            noPrompt: true
+				        });
+					} else {
+					    s.player.name = s.player.name.charAt(0).toUpperCase() + s.player.name.slice(1);
+    	
+    					if (s.player.lastname !== '') {
+    						s.player.lastname = s.player.lastname.charAt(0).toUpperCase() + s.player.lastname.slice(1);
+    					}
+    
+    					s.player.sid = s.id;
+    					s.player.socket = s;
+    					s.player.sockets.push(s);
+    					console.log('Sockets now ' + s.player.sockets.length);
+    					
+    					s.player.logged = false;
+    					s.player.verifiedPassword = false;
+    					s.player.verifiedName = false;
+    					
+    					return fn(s, true);
+				    }
 				} else {
 					return fn(s, false);
 				}
@@ -103,7 +119,8 @@ Character.prototype.load = function(name, s, fn) {
 
 		s.player.sid = s.id;
 		s.player.socket = s;
-
+		s.player.sockets.push(s);
+		
 		s.player.logged = true;
 		s.player.verifiedPassword = true;
 		s.player.verifiedName = true;
@@ -258,6 +275,7 @@ Character.prototype.create = function(s) {
 
 	socket = s.player.socket;
 
+	s.player.sockets = [socket];
 	s.player.mv = s.player.cmv;
 	s.player.mana = s.player.cmana;
 	s.player.hp = s.player.chp;
@@ -275,6 +293,7 @@ Character.prototype.create = function(s) {
 		character.hashPassword(salt, s.player.password, 1000, function(hash) {
 			s.player.password = hash;
 			s.player.socket = null;
+			s.player.sockets = [];
 			
 			s.player.personalPronoun = character.getPersonalPronoun(s.player);
 			
@@ -312,6 +331,150 @@ Character.prototype.create = function(s) {
 			});
 		});
 	});
+};
+
+Character.prototype.fuseNames = function(string1, string2) {
+    var length1, length2, prefix, suffix;
+    
+    length1 = Math.ceil(string1.length/2);
+    length2 = Math.floor(string2.length/2);
+
+    prefix = string1.substring(0, length1);
+    suffix = string2.toLowerCase().substring(length2, string2.length);
+
+    return prefix + suffix;
+};
+
+//A combination character is saved
+Character.prototype.createHydra = function(player1, player2) { 
+    var character = this,
+    raceObj,
+    classObj,
+    socket,
+    startingArea,
+    player;
+
+    if (!Array.isArray(World.config.startingArea)) {
+        startingArea = World.config.startingArea;
+    } else {
+        startingArea = World.config.startingArea[World.dice.roll(1, World.config.startingArea.length) - 1];
+    }
+    
+    raceObj = World.getRace('hydra');
+    
+    player = World.extend({}, raceObj);
+    player = World.extend(player, player1.classObj);
+    player = World.extend(player, World.getTemplate('entity'));
+    
+    player.name = character.fuseNames(player1.name, player2.name);
+    player.displayName = player.name;
+    
+    player.skills = player1.skills.concat(player2.skills); 
+    player.items = player1.items.concat(player2.items);
+    
+    player.refId = player1.refId;
+    player.gold = player1.gold + player2.gold;
+
+    player.diceNum = player1.diceNum + player1.diceNum;
+    player.diceSides = Math.max(player1.diceSides, player2.diceSides);
+    
+    player.sex = player1.sex;
+    player.chp = Math.max(player1.chp, player2.chp);
+    player.cmana = Math.max(player1.cmana, player2.cmana);
+    player.cmv = Math.max(player1.cmv, player2.cmv);
+    player.isPlayer = true;
+    player.salt = '';
+    player.created = new Date();
+    player.saved = null;
+    player.role = 'player';
+    player.area = startingArea.area;
+    player.roomid = startingArea.roomid;
+    player.trains += 25;
+    player.deaths = 0;
+    player.baseStr = Math.max(player1.baseStr, player2.baseStr);
+    player.baseInt = Math.max(player1.baseInt, player2.baseInt);
+    player.baseWis = Math.max(player1.baseWis, player2.baseWis);
+    player.baseCon = Math.max(player1.baseCon, player2.baseCon);
+    player.baseDex = Math.max(player1.baseDex, player2.baseDex);
+    player.settings = {
+        autosac: false,
+        autoloot: true,
+        autocoin: true,
+        wimpy: 0,
+        channels: {
+            blocked: ['flame']
+        }
+    };
+
+    player.mv = player.cmv;
+    player.mana = player.cmana;
+    player.hp = player.chp;
+    player.str = player.baseStr;
+    player.int = player.baseInt;
+    player.wis = player.baseWis;
+    player.con = player.baseCon;
+    player.dex = player.baseDex;
+    player.noFollow = false;  
+    player.noGroup = false;
+
+    character.generateSalt(function(salt) {
+        player.salt = salt;
+
+        character.hashPassword(salt, "iamahydra", 1000, function(hash) {
+            player.password = hash;
+            player.socket = null;
+            player.sockets = [];
+            
+            player.personalPronoun = character.getPersonalPronoun(player);
+            
+            player.possessivePronoun = character.getPossessivePronoun(player);
+
+            fs.writeFile('./players/' + player.name.toLowerCase() + '.json', JSON.stringify(player, null), function (err) {
+                
+                World.msgPlayer(player1, {
+                    msg: 'You black out. Your mind seems to swim and fuzz...you feel you need to log in with your true name, ' + player.name + ', and your password, "iamahydra".'
+                });
+                World.msgPlayer(player2, {
+                    msg: 'You black out. Your mind seems to swim and fuzz...you feel you need to log in with your true name, ' + player.name + ', and your password, "iamahydra".'
+                });
+                player1.disabled = true;
+                player2.disabled = true;
+                player1.socket.disconnect();
+                player2.socket.disconnect();
+                character.save(player1);
+                character.save(player2);
+                
+//                character.load(s.player.name, s, function(s) {
+//                    var roomObj;
+//
+//                    if (err) {
+//                        throw err;
+//                    }
+//
+//                    if (character.addPlayer(s)) {
+//                        s.leave('creation');
+//                        s.join('mud');
+//
+//                        World.sendMotd(s);
+//
+//                        roomObj = World.getRoomObject(s.player.area, s.player.roomid);
+//
+//                        roomObj.playersInRoom.push(s.player);
+//
+//                        Cmds.look(s.player, {
+//                            roomObj: roomObj
+//                        });
+//                    } else {
+//                        World.msgPlayer(s, {
+//                            msg: 'Error logging in. Reconnect and retry.'
+//                        });
+//
+//                        s.disconnect();
+//                    }
+//                });
+            });
+        });
+    });
 };
 
 // recursive function fired in server.js, checked when a new character is being made
@@ -464,6 +627,7 @@ Character.prototype.newCharacter = function(s, command) {
 Character.prototype.save = function(player, fn) {
 	var character = this,
 	socket = player.socket,
+	sockets = player.sockets,
 	followers = player.followers,
 	group = player.group,
 	opponent = player.opponent,
@@ -478,11 +642,13 @@ Character.prototype.save = function(player, fn) {
 		player.group = [];
 		player.followers = [];
 		player.socket = null;
+		player.sockets = [];
 
 		player = World.sanitizeBehaviors(player);
 
 		fs.writeFile('./players/' + player.name.toLowerCase() + '.json', JSON.stringify(player, null), function (err) {
 			player.socket = socket;
+			player.sockets = sockets;
 
 			player = World.setupBehaviors(player);
 			player.opponent = opponent;
