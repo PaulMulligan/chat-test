@@ -37,7 +37,7 @@ Character.prototype.login = function(r, s, fn) {
 				if (!err) {
 					for (i; i < World.players.length; i += 1) {
 						if (World.players[i].name.toLowerCase() === name) {
-						    if (World.players[i].race == 'hydra') {
+						    if (World.players[i].raceAbbr == 'Hyd') {
 						        s.player = World.players[i];
 						    } else {
 						        World.msgPlayer(World.players[i], {
@@ -366,6 +366,9 @@ Character.prototype.createHydra = function(player1, player2) {
     player = World.extend(player, player1.classObj);
     player = World.extend(player, World.getTemplate('entity'));
     
+    player.race = raceObj.name;
+    player.charClass = player1.charClass;
+    
     player.name = character.fuseNames(player1.name, player2.name);
     player.displayName = player.name;
     
@@ -432,10 +435,10 @@ Character.prototype.createHydra = function(player1, player2) {
             fs.writeFile('./players/' + player.name.toLowerCase() + '.json', JSON.stringify(player, null), function (err) {
                 
                 World.msgPlayer(player1, {
-                    msg: 'As the spell fills you and the other, you see them with new, glowing eyes. This person is not a separate being. They are part of you. You are part of them. You both move together, pressing arms, sliding torsos in writhing, snakelike motions. Your bodies cling together, start to melt and fuse. Head against head, you feel your necks growing. Your many eyes opening as your minds become one. Your flesh becoming scales, your body growing large and mighty. Clawed talons, finned ears, mighty reptilian jaws. You are a HYDRA. You black out. Your mind seems to swim and fuzz...you feel you need to log in with your true name, ' + player.name + ', and your password, "iamahydra".'
+                    msg: 'You black out. Your mind seems to swim and fuzz...you feel you need to log in with your true name, ' + player.name + ', and your password, "iamahydra".'
                 });
                 World.msgPlayer(player2, {
-                    msg: 'As the spell fills you and the other, you see them with new, glowing eyes. This person is not a separate being. They are part of you. You are part of them. You both move together, pressing arms, sliding torsos in writhing, snakelike motions. Your bodies cling together, start to melt and fuse. Head against head, you feel your necks growing. Your many eyes opening as your minds become one. Your flesh becoming scales, your body growing large and mighty. Clawed talons, finned ears, mighty reptilian jaws. You are a HYDRA. You black out. Your mind seems to swim and fuzz...you feel you need to log in with your true name, ' + player.name + ', and your password, "iamahydra".'
+                    msg: 'You black out. Your mind seems to swim and fuzz...you feel you need to log in with your true name, ' + player.name + ', and your password, "iamahydra".'
                 });
                 player1.disabled = true;
                 player2.disabled = true;
