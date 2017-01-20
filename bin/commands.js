@@ -1233,7 +1233,7 @@ Cmd.prototype.move = function(target, command, fn) {
 									if (Character.canSee(receiver, targetRoom)) {
 										if (!target.inName) {
 											if (target.short) {
-												msg = '<strong>' + target.capitalizeShort
+												msg = '<strong>' + target.short
 													+ '</strong> walks in from '
 													+ parseMovementMsg(exitObj) + '.';
 											} else {

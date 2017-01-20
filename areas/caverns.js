@@ -104,6 +104,9 @@ module.exports = {
                     id: '2'
                 },{
                     cmd: 'south',
+                    id: '5'
+                },{
+                    cmd: 'east',
                     id: '3'
                 }
             ],
