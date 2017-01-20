@@ -37,7 +37,7 @@ Character.prototype.login = function(r, s, fn) {
 				if (!err) {
 					for (i; i < World.players.length; i += 1) {
 						if (World.players[i].name.toLowerCase() === name) {
-						    if (World.players[i].race == 'hydra') {
+						    if (World.players[i].raceAbbr == 'Hyd') {
 						        s.player = World.players[i];
 						    } else {
 						        World.msgPlayer(World.players[i], {
@@ -365,6 +365,9 @@ Character.prototype.createHydra = function(player1, player2) {
     player = World.extend({}, raceObj);
     player = World.extend(player, player1.classObj);
     player = World.extend(player, World.getTemplate('entity'));
+    
+    player.race = raceObj.name;
+    player.charClass = player1.charClass;
     
     player.name = character.fuseNames(player1.name, player2.name);
     player.displayName = player.name;
