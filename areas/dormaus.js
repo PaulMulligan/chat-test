@@ -31,6 +31,10 @@ module.exports = {
 				{
 					cmd: 'north',
 					id: '2'
+				},{
+					cmd: 'south',
+					id: '1',
+					area: 'farm'
 				}
 			],
 			playersInRoom: [],

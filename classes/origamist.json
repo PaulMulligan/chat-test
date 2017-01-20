@@ -27,17 +27,6 @@
             "prerequisites": {
                 "level": 1
             }
-        },{
-            "id": "orochi",
-            "display": "Orochi",
-            "mod": 0,
-            "train": 100,
-            "type": "spell",
-            "wait": 0,
-            "learned": true,
-            "prerequisites": {
-                "level": 1
-            }
         }
 	]
 }
