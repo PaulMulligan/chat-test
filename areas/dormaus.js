@@ -92,7 +92,145 @@ module.exports = {
 			],
 			playersInRoom: [],
 			monsters: [],
-			items: []
+			size: {value: '4'},
+			items: [{
+				name: 'Potion of Growth', 
+				short: 'a potion of growth',
+				long: 'A swirling potion of growth, that seems to bulge out at its container, was left here.' ,
+				area: 'dormaus',
+				id: '102',
+				level: 1,
+				drinks: 6,
+				maxDrinks: 6,
+				itemType: 'bottle',
+				material: 'glass',
+				weight: 0,
+				affects: [],
+				value: 1,
+				equipped: false,
+				onDrink: function(player, roomObj, bottle) {
+					if (player.size.value == 1) {
+						player.size.value = 2;
+						player.size.display = 'small';
+						World.msgPlayer(player, {
+							msg: 'You feel your whole body tensing up, as your insides feel swollen and bubbly. Your tiny body feels more firm as you start to grow, stretching out from your tiny stature and looking in awe as the towering world around you seems so much smaller. You grow to the size of a small fox.',
+							styleClass: 'cmd-drop blue'
+						});
+					} else if (player.size.value == 2) {
+						player.size.value = 3;
+						player.size.display = 'medium-sized';
+						World.msgPlayer(player, {
+							msg: 'You feel your whole body tensing up, as your insides feel swollen and bubbly. Your feet press into the ground as you start to grow, stretching out from your short stature and seeing the world around you shrink to match your size. You grow to the size of a human.',
+							styleClass: 'cmd-drop blue'
+						});
+					} else if (player.size.value == 3) {
+						player.size.value = 4;
+						player.size.display = 'large';
+						World.msgPlayer(player, {
+							msg: 'You feel your whole body tensing up, as your insides feel swollen and bubbly. You feel powerful and heavy as you start to grow, stretching out from your ordinary stature and becoming taller and taller. Your weight presses into the ground, and the world around you starts to look small and weak, as you grow as large as a minotaur.',
+							styleClass: 'cmd-drop blue'
+						});
+					} else if (player.size.value == 4) {
+						player.size.value = 5;
+						player.size.display = 'huge';
+						World.msgPlayer(player, {
+							msg: 'You feel your whole body tensing up, as your insides feel swollen and bubbly. Your feet leave mighty dents in the ground, and your whole body feels enormous and weighty. The world around you looks like a toy, becoming small and almost unreal. You grow to the mighty height of a dragon, other creatures mere dwarves to you.',
+							styleClass: 'cmd-drop blue'
+						});
+					} else if (player.size.value == 5) {
+						player.size.value = 6;
+						player.size.display = 'gigantic';
+						World.msgPlayer(player, {
+							msg: 'You feel your whole body tensing up, as your insides feel swollen and bubbly. The world around you shrinks so quickly that it soon looks like a plaything. You could crush entire buildings under one of your enormous feet. Your whole body is enormous and tanklike, a mighty and gigantic towering behemoth! You are too large to even reasonably interact with the antlike creatures beneath you.',
+							styleClass: 'cmd-drop blue'
+						});
+						
+						var respawnRoom = World.getRoomObject(roomObj.overworld.area, roomObj.overworld.roomid);
+						
+						Room.removePlayer(roomObj, player);
+					
+						respawnRoom.playersInRoom.push(player);
+						
+						player.roomid = respawnRoom.id;
+						player.area = respawnRoom.area;
+						
+					} else {
+						World.msgPlayer(player, {
+							msg: 'You feel a bubbling and gurgling in your colossal belly as you sip from the microscopic bottle, but then it fades. You are too large and powerful for the magic of this potion to grow you any further.',
+							styleClass: 'cmd-drop blue'
+						});
+					}
+					
+				}
+			},{
+				name: 'Potion of Shrinking', 
+				short: 'a potion of shrinking',
+				long: 'A swirling potion of shrinking, that seems to clench within its container, was left here.' ,
+				area: 'dormaus',
+				id: '102',
+				level: 1,
+				drinks: 6,
+				maxDrinks: 6,
+				itemType: 'bottle',
+				material: 'glass',
+				weight: 0,
+				affects: [],
+				value: 1,
+				equipped: false,
+				onDrink: function(player, roomObj, bottle) {
+					if (player.size.value == 1) {
+						World.msgPlayer(player, {
+							msg: 'You feel your whole body tensing up, as your insides feel small and light. The sensation then fades. It seems that this potion is too weak to shrink you any smaller.',
+							styleClass: 'cmd-drop blue'
+						});
+					} else if (player.size.value == 2) {
+						player.size.value = 1;
+						player.size.display = 'tiny';
+						World.msgPlayer(player, {
+							msg: 'You feel your whole body tensing up, as your insides feel small and light. Your already short body begins to shrink, the world around you growing larger and more intimidating. You squeak as you shrink down to the size of one of your former feet, becoming the size of a tiny mouse.',
+							styleClass: 'cmd-drop blue'
+						});
+					} else if (player.size.value == 3) {
+						player.size.value = 2;
+						player.size.display = 'small';
+						World.msgPlayer(player, {
+							msg: 'You feel your whole body tensing up, as your insides feel small and light. You feel your limbs getting thinner, and your body shrinking. The world looks large and clunky around you as you drop to half your height, becoming the size of a short fox.',
+							styleClass: 'cmd-drop blue'
+						});
+					} else if (player.size.value == 4) {
+						player.size.value = 3;
+						player.size.display = 'medium-sized';
+						World.msgPlayer(player, {
+							msg: 'You feel your whole body tensing up, as your insides feel small and light. Your hefty body shrinks down, your large form reducing to the size of a mere human, as the world around you seems to be returning to the size designed for someone of this height.',
+							styleClass: 'cmd-drop blue'
+						});
+					} else if (player.size.value == 5) {
+						player.size.value = 4;
+						player.size.display = 'large';
+						World.msgPlayer(player, {
+							msg: 'You feel your whole body tensing up, as your insides feel small and light. Your mighty and bulky body shrinks down, your huge form shrinking to merely a size that is merely much larger than most of those around you, instead of towering and intimidating.',
+							styleClass: 'cmd-drop blue'
+						});
+					} else {
+						player.size.value = 5;
+						player.size.display = 'huge';
+						World.msgPlayer(player, {
+							msg: 'You feel a bubbling and gurgling in your colossal belly as you sip from the microscopic bottle, and then with a bizarre rushing sensation, you shrink down from your colossal size. The world rushes up to meet you, and you are drawn down from the cloud layer and left as only a massive hulking beast, rather than an impossibly huge monster.',
+							styleClass: 'cmd-drop blue'
+						});
+						
+						var respawnRoom = World.getRoomObject(roomObj.overworld.area, roomObj.overworld.roomid);
+						
+						Room.removePlayer(roomObj, player);
+					
+						respawnRoom.playersInRoom.push(player);
+						
+						player.roomid = respawnRoom.id;
+						player.area = respawnRoom.area;
+					}
+					
+				}
+			}]
 		},
         {
             id: '4',
@@ -108,6 +246,7 @@ module.exports = {
                 }
             ],
             playersInRoom: [],
+			size: {value: '4'},
             monsters: [],
             items: []
         },
@@ -116,6 +255,7 @@ module.exports = {
             title: 'The Want of a Nail General Store',
             area: 'dormaus',
             light: true,
+			size: {value: '4'},
             content: 'The walls and floor of this store are stocked with an assortment of strange odds and ends. Bags of flour sit next to chipped statues, and on the shelves, bottles of vinegar share space with wooden masks and stuffed animals.',
             outdoors: false,
             exits: [
@@ -136,6 +276,7 @@ module.exports = {
             title: 'The Want of a Nail Back Rooms',
             area: 'dormaus',
             light: true,
+			size: {value: '4'},
             content: 'The rear of the general store is the living quarters for the shopkeeper, though he always welcomes visitors. A large wagon wheel is propped against the wall, next to the colourful carpet. A pot of tea is boiling on the warm stove.',
             outdoors: false,
             exits: [
@@ -254,6 +395,7 @@ module.exports = {
                 }
             ],
             playersInRoom: [],
+			size: {value: '4'},
             monsters: [],
             items: []
         },
@@ -281,6 +423,7 @@ module.exports = {
             light: true,
             content: 'The inn is a clean and homely building. The walls are white with fresh paint, and some effort has been put into decorating them with photographs and woodcuts. From the ceiling, a small but pretty chandelier is lighting the room.',
             outdoors: false,
+			size: {value: '4'},
             exits: [
                 {
                     cmd: 'south',
@@ -307,6 +450,7 @@ module.exports = {
                     id: '13'
                 }
             ],
+			size: {value: '4'},
             playersInRoom: [],
             monsters: [],
             items: []
@@ -326,6 +470,7 @@ module.exports = {
             ],
             playersInRoom: [],
             monsters: [],
+			size: {value: '4'},
             items: []
         }
 	]

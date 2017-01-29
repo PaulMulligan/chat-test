@@ -719,10 +719,6 @@ Cmd.prototype.drink = function(target, command) {
 					target.thirst = 0;
 				}
 
-				if (typeof bottle.onDrink === 'function') {
-					bottle.onDrink(target, roomObj, bottle);
-				}
-
 				World.msgRoom(roomObj, {
 					msg: target.displayName + ' drinks from a ' + bottle.short,
 					playerName: target.name,
@@ -733,6 +729,10 @@ Cmd.prototype.drink = function(target, command) {
 					msg: 'You drink from a ' + bottle.short,
 					styleClass: 'cmd-drop blue'
 				});
+				
+				if (typeof bottle.onDrink === 'function') {
+					bottle.onDrink(target, roomObj, bottle);
+				}
 			} else {
 				World.msgPlayer(target, {
 					msg: 'A ' + bottle.short + ' is bone dry.',
@@ -1233,7 +1233,7 @@ Cmd.prototype.move = function(target, command, fn) {
 									if (Character.canSee(receiver, targetRoom)) {
 										if (!target.inName) {
 											if (target.short) {
-												msg = '<strong>' + target.capitalizeShort
+												msg = '<strong>' + target.short
 													+ '</strong> walks in from '
 													+ parseMovementMsg(exitObj) + '.';
 											} else {
@@ -3254,7 +3254,7 @@ Cmd.prototype.score = function(target, command) {
 
 Cmd.prototype.help = function(target, command) {
 	if (!command.msg) {
-		command.msg = 'help';
+		command.msg = 'commands';
 	}
 
 	fs.readFile('./help/' + command.msg.replace(/ /g, '_') + '.html', 'utf8', function (err, data) {

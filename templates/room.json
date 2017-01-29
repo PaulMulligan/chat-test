@@ -17,5 +17,6 @@
 	"preventRecall": false,
 	"preventDecay": false,
 	"behaviors": [],
-	"events": []
+	"events": [],
+	"overworld": {"area": "overworld", "roomid": "1"}
 }
