@@ -183,6 +183,12 @@ window.onload = function() {
 			document.dispatchEvent(r.evt);
 		}
 	});
+	
+	ws.on('map', function(r) {
+	    var map = document.getElementById('map');
+        map.className = r.file;
+        map.style['background-position'] = r.position;
+    });
 
 	setInterval(function() {
 		canSend = true;

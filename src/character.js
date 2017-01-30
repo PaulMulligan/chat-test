@@ -778,9 +778,9 @@ Character.prototype.hunger = function(target) {
 //			}
 
 			if (World.dice.roll(1, 2) === 1) {
-//				World.msgPlayer(target, {msg: 'You feel hungry.', styleClass: 'hunger'});
+				World.msgPlayer(target, {msg: 'You feel hungry.', styleClass: 'hunger'});
 			} else {
-//				World.msgPlayer(target, {msg: 'Your stomach begins to growl.', styleClass: 'hunger'});
+				World.msgPlayer(target, {msg: 'Your stomach begins to growl.', styleClass: 'hunger'});
 			}
 		}
 	} else {
@@ -818,9 +818,9 @@ Character.prototype.thirst = function(target) {
 			}
 
 			if (World.dice.roll(1, 2) === 1) {
-//				World.msgPlayer(target, {msg: 'You are thirsty.', styleClass: 'thirst'});
+				World.msgPlayer(target, {msg: 'You are thirsty.', styleClass: 'thirst'});
 			} else {
-//				World.msgPlayer(target, {msg: 'Your lips are parched.', styleClass: 'thirst'});
+				World.msgPlayer(target, {msg: 'Your lips are parched.', styleClass: 'thirst'});
 			}
 		}
 	} else {

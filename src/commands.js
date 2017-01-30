@@ -1219,6 +1219,17 @@ Cmd.prototype.move = function(target, command, fn) {
 							Room.removePlayer(roomObj, target);
 
 							targetRoom.playersInRoom.push(target);
+							
+							if (target.sockets && target.sockets.length > 0) {
+					            for (i = 0; i < target.sockets.length; i++) {
+					                var s = target.sockets[i];
+					                s.emit('map', targetRoom.map);
+					            }
+					        } else if (target.socket){
+					            target.socket.emit('map', targetRoom.map);
+					        } else {
+					            target.emit('map', targetRoom.map);
+					        }
 						} else {
 							Room.removeMob(roomObj, target);
 

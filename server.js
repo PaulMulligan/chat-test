@@ -53,7 +53,37 @@ server = http.createServer(function (req, res) {
 //			res.write(data);
 //			res.end();
 //		});
-	}
+	} else if (req.url === '/nomap.png') {
+        fs.readFile('./public/images/nomap.png', function (err, data) {
+            if (err) {
+                throw err;
+            }
+
+            res.writeHead(200, {
+                'Cache-Control': 'public, max-age=85400',
+                'Expires': new Date(Date.now() + 2592000000).toUTCString(),
+                'Content-Type': 'image/png'
+            });
+
+            res.write(data);
+            res.end();
+        });
+    } else if (req.url === '/dmap.png') {
+        fs.readFile('./public/images/dmap.png', function (err, data) {
+            if (err) {
+                throw err;
+            }
+
+            res.writeHead(200, {
+                'Cache-Control': 'public, max-age=85400',
+                'Expires': new Date(Date.now() + 2592000000).toUTCString(),
+                'Content-Type': 'image/png'
+            });
+
+            res.write(data);
+            res.end();
+        });
+    }
 }),
 World = require('./src/world').world,
 io = require('socket.io')(server, {

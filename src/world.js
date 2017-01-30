@@ -1371,12 +1371,12 @@ World.prototype.extend = function(extendObj, readObj) {
 				} else if (prop === 'size' || prop === 'recall')  {
 					extendObj[prop] = readObj[prop];
 				} else if (typeof extendObj[prop] === 'object' && typeof readObj[prop] === 'object')  {
-					for (prop2 in readObj[prop]) {
-						this.extend(extendObj[prop][prop2], readObj[prop][prop2]);
-					}
+//					for (prop2 in readObj[prop]) {
+						this.extend(extendObj[prop], readObj[prop]);
+//					}
 				}
 			} else {
-				extendObj[prop] = readObj[prop];
+			    extendObj[prop] = readObj[prop];
 			}
 		}
 	}

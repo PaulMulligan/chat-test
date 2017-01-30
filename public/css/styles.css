@@ -12,7 +12,7 @@ padding: 0;
 margin: 0;
 height: 100%;
 letter-spacing: 0.0650em;
-background-image: url('bg.jpg');
+/* background-image: url('bg.jpg'); */
 background-repeat: no-repeat;
 background-position: center top; 
 }
@@ -40,7 +40,8 @@ font-size: 145%;
 padding-top: 280px;
 height: 850px;
 width: 980px;
-margin: 0 auto;
+margin: 0 0 0 20px;
+/* margin: 0 auto; */
 }
 .error {
 color: #ff0033;
@@ -74,6 +75,7 @@ width: 99%;
 #inputwrapper {
 width: 980px;
 padding-top: 5px;
+margin: 0 0 0 20px; 
 }
 #cmd {
 border: none;
@@ -191,4 +193,27 @@ color: #ddd;
 .large {
 font-size: 1.5em;
 letter-spacing: 0em;
+}
+#map {
+width: 200px;
+height: 200px;
+background-color: black;
+position: absolute;
+top: 290px;
+left: 1100px;
+border: 1px solid grey;
+background-repeat: no-repeat;
+}
+.nomap {
+background-image: url('nomap.png');
+}
+.dormaus {
+background-image: url('dmap.png');
+}
+#youarehere {
+	width: 10px;
+	height: 10px;
+	background-color: red;
+	margin: auto;
+	margin-top: 95px;
 }

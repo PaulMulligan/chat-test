@@ -18,5 +18,6 @@
 	"preventDecay": false,
 	"behaviors": [],
 	"events": [],
-	"overworld": {"area": "overworld", "roomid": "1"}
+	"overworld": {"area": "overworld", "roomid": "1"},
+	"map": {"file": "nomap", "position": "0px 0px"}
 }
